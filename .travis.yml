@@ -1,4 +1,3 @@
-language: generic
 sudo: required # any time we have to make use of docker we need to have super permissions
 services: # we need tocker preinstalled. it will auto install a copy of docker
   - docker
@@ -7,4 +6,4 @@ before_install: # commands executed before commans are run
   - docker build -t maknovicell/docker-react -f Dockerfile.dev . # use current directory when doing stuff. anyitme we run the docker build -> we get the image id. so we tag it with local docker username and name of repo
 
 script: # all commands that need to execute to run test suite. each return other than exit 0 -> treat as fail.
-  - sudo docker run -e "CI=true" maknovicell/docker-react npm run test -- --coverage # npm run test waits for input so it just hangs. thats why we add -e. npm run test overrides the default command.
+  - docker run -e "CI=true" maknovicell/docker-react npm run test # npm run test waits for input so it just hangs. thats why we add -e. npm run test overrides the default command.
