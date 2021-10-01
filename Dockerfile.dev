@@ -4,9 +4,10 @@ WORKDIR '/app'
 
 COPY package.json .
 RUN npm install -g npm
-RUN npm install react-scripts -g
-RUN npm install @testing-library/dom -g
-RUN npm install @testing-library/jest-dom -g
+# Had to add this one by one as they were throwing not found errors on the npm run test step 
+# RUN npm install react-scripts -g
+# RUN npm install @testing-library/dom -g
+# RUN npm install @testing-library/jest-dom -g
 
 COPY . . 
 
