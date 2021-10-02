@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web: # 1 service container to host the dev server
+    environment:
+      - CHOKIDAR_USEPOLLING=true # auto reload changes
+    build:
+      context: . # where we want all the files and folders for this image to come from - same directory as the docker compose in this case
+      dockerfile: Dockerfile.dev # look in current directory, find the file and build the iamge
+    ports:
+      - "3000:3000"
+    volumes:
+      # - /app/node_modules # do not try to map a folder against node modules in the container
+      #this above breaks with permission denied??
+      - .:/app # the current folder outside the container to the app folder inside the container
+  tests: # 1 scontainer respondible for running tests everytime smth changes
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app # the current folder outside the container to the app folder inside the container
+    command: ["npm", "run", "test"]
+
+    # docker-compose -f docker-compose-dev.yml up --build
+    # docker-compose -f docker-compose-dev.yml down

@@ -10,3 +10,16 @@ before_install: # commands executed before commans are run
 
 script: # all commands that need to execute to run test suite. each return other than exit 0 -> treat as fail.
   - docker run -e CI=true maknovicell/docker-react npm run test # npm run test waits for input so it just hangs. thats why we add -e. npm run test overrides the default command.
+
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-west-1"
+  app: "docker-react-app"
+  env: "Dockerreactapp-env"
+  bucket_name: "elasticbeanstalk-eu-west-1-638922103874"
+  bucket_path: "docker-react-app"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+    # secure: "$AWS_SECRET_KEY"
